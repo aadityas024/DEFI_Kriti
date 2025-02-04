@@ -46,11 +46,6 @@ To address these issues, we’re introducing a **decentralized Peer-to-Peer (P2P
 6. **User Dashboard**  
    - Track active & completed trades, pending buy orders, and trade history.
 
-### System Architecture Diagram  
-Below is the architecture of the energy trading and order processing workflow:  
-
-![System Architecture](./Screenshot%202025-02-04%20220610.png)  
-
 ---
 
 ### Carbon Credit Marketplace  
