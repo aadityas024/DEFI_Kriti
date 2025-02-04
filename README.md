@@ -1,20 +1,20 @@
-# 🌍 P2P Energy Trading & Carbon Credit Marketplace
+# P2P Energy Trading & Carbon Credit Marketplace
 
-## 🔥 Overview  
+## Overview  
 This project is a **decentralized P2P Energy Trading Platform** and **Carbon Credit Marketplace** powered by **zkSync Sepolia Testnet**. The platform enables direct energy trading between **prosumers** and **consumers**, along with a **trustless carbon credit trading system** using **Solidity smart contracts**.  
 
 Key Features:  
-✅ **P2P Energy Trading** with dynamic order-matching and geohash-based pricing.  
-✅ **Carbon Credit Marketplace** for buying, selling, and trading carbon credits as ERC-20 tokens (**CCTokens**).  
-✅ **IoT-Based Battery Monitoring** to validate storage capacity before approving buy orders.  
-✅ **zk-SNARK Validation** ensures privacy and security in transaction verification.  
-✅ **Layer 2 Scaling** on **zkSync** for fast, low-cost, and Ethereum-secured transactions.  
+ **P2P Energy Trading** with dynamic order-matching and geohash-based pricing.  
+ **Carbon Credit Marketplace** for buying, selling, and trading carbon credits as ERC-20 tokens (**CCTokens**).  
+ **IoT-Based Battery Monitoring** to validate storage capacity before approving buy orders.  
+ **zk-SNARK Validation** ensures privacy and security in transaction verification.  
+ **Layer 2 Scaling** on **zkSync** for fast, low-cost, and Ethereum-secured transactions.  
 
 ---  
 
-## 🚀 Features  
+## Features  
 
-### 🔋 P2P Energy Trading Platform  
+### P2P Energy Trading Platform  
 1. **User Profile & Authentication**  
    - Unique user profile with username, geolocation (converted to **geohash**), and IoT ID.  
    - **JWT-based authentication** for secure access.  
@@ -236,11 +236,45 @@ Our server will request battery status updates from your ESP32 whenever needed.
 Restart the ESP32.
 ---
 
-### 🛠 Running zk-SNARK Verification  
+# Zero-Knowledge Proof for Energy Market Transactions
+
+## Input Description
+
+- `a` → Corresponds to the **buy order quantity** that the buyer is placing.
+- `b` → Corresponds to the **sum of all pending buy orders** in the market queue (for post-10 AM transactions) or **0** (for 8-10 AM buying).
+- `c` → **Storage capacity left** as informed by IoT devices.
+- **Output (`valid`)**:
+  - `1` → **Exceeds limit** → Transaction **blocked**.
+  - `0` → **Under limit** → Transaction **proceeds**.
+
+## Commands
+
 ```sh
-nano input.json  
-node circuit_js/generate_witness.js circuit_js/circuit.wasm input.json witness.wtns  
-snarkjs wtns export json witness.wtns witness.json  
-jq '.[1]' witness.json  
-snarkjs groth16 prove circuit_final.zkey witness.wtns proof.json public.json  
-snarkjs groth16 verify verification_key.json public.json proof.json  
+nano input.json
+node circuit_js/generate_witness.js circuit_js/circuit.wasm input.json witness.wtns
+snarkjs wtns export json witness.wtns witness.json
+jq '.[1]' witness.json
+snarkjs groth16 prove circuit_final.zkey witness.wtns proof.json public.json
+snarkjs groth16 verify verification_key.json public.json proof.json
+```
+
+## Why Use Proof and Verification?
+
+### Local Testing (Using `jq`)
+
+✅ You can quickly check whether `a + b > c` by extracting the witness output.  
+❌ But this does not provide cryptographic proof—it's just an internal value.
+
+### Zero-Knowledge Proof (ZKP) Use Case
+
+✅ If you need to convince others (e.g., in a blockchain system or a privacy-preserving application) that you correctly computed `a + b > c` **without revealing `a`, `b`, or `c`**, then:
+
+- `snarkjs groth16 prove` generates a **cryptographic proof**.
+- `snarkjs groth16 verify` confirms the proof's **validity**.
+
+❌ Without this, someone would have to **trust your witness output** instead of verifying it independently.
+
+### When to Skip Proof and Verification
+
+- ✅ If you're **only debugging or testing locally**, using `jq` on the `witness.json` is enough.
+- ✅ If you need to **prove validity to others** (e.g., in a decentralized or privacy-sensitive system), you must **generate and verify the proof**.
