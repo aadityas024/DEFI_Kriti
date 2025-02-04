@@ -3,7 +3,7 @@
 ## Overview  
 This project is a **decentralized P2P Energy Trading Platform** and **Carbon Credit Marketplace** powered by **zkSync Sepolia Testnet**. The platform enables direct energy trading between **prosumers** and **consumers**, along with a **trustless carbon credit trading system** using **Solidity smart contracts**.  
 
-Key Features:  
+# Key Features:  
  **P2P Energy Trading** with dynamic order-matching and geohash-based pricing.  
  **Carbon Credit Marketplace** for buying, selling, and trading carbon credits as ERC-20 tokens (**CCTokens**).  
  **IoT-Based Battery Monitoring** to validate storage capacity before approving buy orders.  
@@ -45,7 +45,7 @@ Key Features:
 
 ---
 
-### 🌱 Carbon Credit Marketplace  
+### Carbon Credit Marketplace  
 1. **Selling Carbon Credits (ERC-20 CCTokens)**  
    - Sellers list **CCTokens** with a fixed price per token in **ETH**.  
    - Tokens are **escrowed** until the sale is finalized.  
@@ -262,19 +262,19 @@ snarkjs groth16 verify verification_key.json public.json proof.json
 
 ### Local Testing (Using `jq`)
 
-✅ You can quickly check whether `a + b > c` by extracting the witness output.  
-❌ But this does not provide cryptographic proof—it's just an internal value.
+ You can quickly check whether `a + b > c` by extracting the witness output.  
+ But this does not provide cryptographic proof—it's just an internal value.
 
 ### Zero-Knowledge Proof (ZKP) Use Case
 
-✅ If you need to convince others (e.g., in a blockchain system or a privacy-preserving application) that you correctly computed `a + b > c` **without revealing `a`, `b`, or `c`**, then:
+ If you need to convince others (e.g., in a blockchain system or a privacy-preserving application) that you correctly computed `a + b > c` **without revealing `a`, `b`, or `c`**, then:
 
 - `snarkjs groth16 prove` generates a **cryptographic proof**.
 - `snarkjs groth16 verify` confirms the proof's **validity**.
 
-❌ Without this, someone would have to **trust your witness output** instead of verifying it independently.
+ Without this, someone would have to **trust your witness output** instead of verifying it independently.
 
 ### When to Skip Proof and Verification
 
-- ✅ If you're **only debugging or testing locally**, using `jq` on the `witness.json` is enough.
-- ✅ If you need to **prove validity to others** (e.g., in a decentralized or privacy-sensitive system), you must **generate and verify the proof**.
+-  If you're **only debugging or testing locally**, using `jq` on the `witness.json` is enough.
+-  If you need to **prove validity to others** (e.g., in a decentralized or privacy-sensitive system), you must **generate and verify the proof**.
