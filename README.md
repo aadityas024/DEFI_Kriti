@@ -129,39 +129,106 @@ Each buyer must configure their ESP32 device to connect to Wi-Fi and serve batte
 The description for user end configuring the ESP32 device is provided in the next section.
 
 ---
+# IoT-Based Battery Capacity Monitoring for Buy Order Processing
+
+## Overview
+
+This document describes how we use an **IoT-enabled ESP32 device** to monitor the **leftover battery storage capacity** of a buyer before processing their **buy order** for energy trading.
+
+Our system ensures that buyers can only place orders if they have sufficient battery capacity to store the purchased energy. The ESP32 IoT device reports real-time battery storage data to our backend server before an order is processed.
+
+---
+
+## **1. How the IoT System Works**
+### **Step 1: ESP32 Collects Battery Capacity Data**
+Each buyer is equipped with an **ESP32 IoT device**, which is connected to a **battery voltage sensor**. This device:
+- Measures the **current battery voltage**.
+- Estimates the **remaining storage capacity** (percentage).
+- Hosts a **local HTTP server** to respond with battery data on request.
+
+### **Step 2: The Server Requests Battery Data**
+- When a **buyer attempts to place a buy order**, our **backend server** sends an HTTP request to the ESP32 device installed at the buyer's location.
+- The request is sent to:
+```yaml
+http://<BUYER_ESP32_IP>/get-battery
+```
+
+Here is your README.md file explaining how your IoT system is used to receive battery storage capacity and check it before processing a buy order in your system.
+
+markdown
+Copy
+Edit
+# IoT-Based Battery Capacity Monitoring for Buy Order Processing
+
+## Overview
+
+This document describes how we use an **IoT-enabled ESP32 device** to monitor the **leftover battery storage capacity** of a buyer before processing their **buy order** for energy trading.
+
+Our system ensures that buyers can only place orders if they have sufficient battery capacity to store the purchased energy. The ESP32 IoT device reports real-time battery storage data to our backend server before an order is processed.
+
+---
+
+## **1. How the IoT System Works**
+### **Step 1: ESP32 Collects Battery Capacity Data**
+Each buyer is equipped with an **ESP32 IoT device**, which is connected to a **battery voltage sensor**. This device:
+- Measures the **current battery voltage**.
+- Estimates the **remaining storage capacity** (percentage).
+- Hosts a **local HTTP server** to respond with battery data on request.
+
+### **Step 2: The Server Requests Battery Data**
+- When a **buyer attempts to place a buy order**, our **backend server** sends an HTTP request to the ESP32 device installed at the buyer's location.
+- The request is sent to:
+http://<BUYER_ESP32_IP>/get-battery
+
+arduino
+Copy
+Edit
+- The ESP32 device **responds with battery voltage and available capacity**.
+
+### **Step 3: Validating Buy Order**
+- Before **processing the buy order**, our ***ZK-SNARK*** the **battery capacity** from the ESP32 response.
+- If the **remaining capacity is sufficient**, the order proceeds.
+- If the **battery is nearly full**, the order is **rejected** to prevent overflow.
+
+Each buyer must configure their **ESP32 device** to connect to Wi-Fi and serve battery data.
+The description for user end configuring the ESP32 device is provided in the next section.
+
+---
 # IoT Device Setup for User-end
 
 ## Overview
 
-This guide will help you connect your ESP32 IoT device to your Wi-Fi network and enable it to serve battery status information (e.g., voltage and capacity) via an HTTP server.
+This guide will help you connect your **ESP32 IoT device** to your **Wi-Fi network** and enable it to serve battery status information (e.g., voltage and capacity) via an **HTTP server**.
 
 ### Prerequisites:
-- An ESP32 microcontroller.
-- A Wi-Fi network with the SSID (network name) and password.
-- A battery voltage sensor connected to the ESP32 (e.g., via the ADC pins).
+- An **ESP32 microcontroller**.
+- A **Wi-Fi network** with the SSID (network name) and password.
+- A **battery voltage sensor** connected to the ESP32 (e.g., via the **ADC** pins).
 
 In this guide, you will:
-1. Connect your ESP32 IoT device to your Wi-Fi.
-2. Set up the IoT device to serve the battery data (voltage and capacity).
-3. Send the data from the IoT device to the backend server.
+1. Connect your **ESP32 IoT device** to your Wi-Fi.
+2. Set up the **IoT device** to serve the battery data (voltage and capacity).
+3. Send the data from the **IoT device** to the **backend server**.
 
 ---
 
-## 1. Setting Up the IoT Device (ESP32)
+## 1. **Setting Up the IoT Device (ESP32)**
 
-Follow these steps to get your ESP32 connected to your Wi-Fi and ready to communicate with the backend server:
+Follow these steps to get your **ESP32** connected to your Wi-Fi and ready to communicate with the backend server:
 
 ### Step 1: Download the Code
 
-Download the Arduino code for the ESP32 from this repository (or copy the code provided below). This code configures your ESP32 to connect to a Wi-Fi network and serve battery data on request.
+Download the **Arduino code** for the ESP32 from this repository (or copy the code provided below). This code configures your ESP32 to connect to a Wi-Fi network and serve battery data on request.
 
 ### Step 2: Update Wi-Fi Credentials
 
-Before uploading the code to your ESP32, you need to update the Wi-Fi credentials in the #define section of the code. Replace the your_SSID and your_PASSWORD with your actual Wi-Fi network name (SSID) and password.
+Before uploading the code to your ESP32, you need to **update the Wi-Fi credentials** in the `#define` section of the code. Replace the `your_SSID` and `your_PASSWORD` with your actual **Wi-Fi network name** (SSID) and **password**.
 
+```cpp
 // Replace with your network credentials
 const char *ssid = "your_SSID";      // Your Wi-Fi SSID
 const char *password = "your_PASSWORD"; // Your Wi-Fi password
+```
 ### Step 3: Upload the Code to ESP32
 1. Open Arduino IDE or PlatformIO.
 2. Select your ESP32 board from the Tools > Board menu.
@@ -169,6 +236,7 @@ const char *password = "your_PASSWORD"; // Your Wi-Fi password
 4. Click on Upload to upload the code to your ESP32.
 ### Code for the ESP32:
 
+```cpp
 #include <WiFi.h>
 #include <ESPAsyncWebServer.h>
 
@@ -209,6 +277,7 @@ void setup() {
 void loop() {
   // The server handles requests asynchronously
 }
+```
 1. Click the "Upload" button (⭮ arrow icon in the Arduino IDE).
 2. Wait for the upload to complete. You will see "Done uploading" in the bottom console.
 3. Open Serial Monitor:
@@ -218,11 +287,17 @@ void loop() {
 1. After connecting to Wi-Fi, the ESP32 will display its IP address in the Serial Monitor.
 2.Copy the IP address (e.g., 192.168.1.100).
 3.Test the connection by entering the following URL in a web browser:
+```arduino
 http://<ESP32_IP_ADDRESS>/get-battery
+```
 Example:
+```arduino
 http://192.168.1.100/get-battery
+```
 Expected response:
+```yaml
 Voltage: 3.7V, Capacity: 85%
+```
 ### Step 5: Register Your IoT Device with Our Server
 1. Send us your ESP32’s IP Address (displayed in Serial Monitor).
 2. We will link your device ID to your account on our backend system.
