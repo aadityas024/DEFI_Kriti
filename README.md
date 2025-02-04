@@ -46,6 +46,8 @@ To address these issues, we’re introducing a **decentralized Peer-to-Peer (P2P
 6. **User Dashboard**  
    - Track active & completed trades, pending buy orders, and trade history.
 
+![image alt](https://github.com/aadityas024/kriti/blob/6dd5686353f0de2ad3d16218abc9f4c672504b19/Screenshot%202025-02-04%20220610.png)
+
 ---
 
 ### Carbon Credit Marketplace  
@@ -324,35 +326,3 @@ Restart the ESP32.
 - **Output (`valid`)**:
   - `1` → **Exceeds limit** → Transaction **blocked**.
   - `0` → **Under limit** → Transaction **proceeds**.
-
-## Commands
-
-```sh
-nano input.json
-node circuit_js/generate_witness.js circuit_js/circuit.wasm input.json witness.wtns
-snarkjs wtns export json witness.wtns witness.json
-jq '.[1]' witness.json
-snarkjs groth16 prove circuit_final.zkey witness.wtns proof.json public.json
-snarkjs groth16 verify verification_key.json public.json proof.json
-```
-
-## Why Use Proof and Verification?
-
-### Local Testing (Using `jq`)
-
- - You can quickly check whether `a + b > c` by extracting the witness output.  
- - But this does not provide cryptographic proof—it's just an internal value.
-
-### Zero-Knowledge Proof (ZKP) Use Case
-
- If you need to convince others (e.g., in a blockchain system or a privacy-preserving application) that you correctly computed `a + b > c` **without revealing `a`, `b`, or `c`**, then:
-
-- `snarkjs groth16 prove` generates a **cryptographic proof**.
-- `snarkjs groth16 verify` confirms the proof's **validity**.
-
- Without this, someone would have to **trust your witness output** instead of verifying it independently.
-
-### When to Skip Proof and Verification
-
--  If you're **only debugging or testing locally**, using `jq` on the `witness.json` is enough.
--  If you need to **prove validity to others** (e.g., in a decentralized or privacy-sensitive system), you must **generate and verify the proof**.
