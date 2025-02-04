@@ -5,7 +5,7 @@ The energy sector is grappling with three critical challenges: **ensuring energy
 
 To address these issues, we’re introducing a **decentralized Peer-to-Peer (P2P) Energy Trading Platform and Carbon Credit Marketplace**, built on the **zkSync Sepolia Testnet**. This innovative platform allows **energy producers (prosumers) and consumers** to trade energy **directly with each other**, cutting out the middleman. By leveraging **blockchain technology**, the platform ensures that transactions are **transparent, efficient, and secure**. Additionally, it uses **ZK-SNARKs** to **protect user data privacy**, making it a **trustworthy solution for modern energy trading**.
 
-# Key Features
+## Key Features
 
  **P2P Energy Trading** with dynamic order-matching and geohash-based pricing.  
  **Carbon Credit Marketplace** for buying, selling, and trading carbon credits as ERC-20 tokens (**CCTokens**).  
