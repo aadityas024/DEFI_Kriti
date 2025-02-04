@@ -130,6 +130,8 @@ Edit
 Each buyer must configure their ESP32 device to connect to Wi-Fi and serve battery data.
 The description for user end configuring the ESP32 device is provided in the next section.
 
+![image alt](https://github.com/aadityas024/kriti/blob/c40b2aa97ccb092193d45842b29bdaff9922ac07/Screenshot%202025-02-04%20220635.png)
+
 ---
 # IoT-Based Battery Capacity Monitoring for Buy Order Processing
 
