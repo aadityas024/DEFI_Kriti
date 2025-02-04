@@ -11,50 +11,45 @@ To address these issues, we’re introducing a **decentralized Peer-to-Peer (P2P
 
 To get started, clone the GitHub repository:
 
-````bash
+```bash
 git clone https://github.com/Kriti2025.git
-
-````bash
+```
+```bash
 cd backend
-
+```
 ```bash
 node server.js
-
+```
 
 ```bash
 npm install
-
+```
 
 ```bash
 npx hardhat compile
-
+```
 
 ```bash
 npx hardhat node
-
+```
 
 ```bash
 npx hardhat run ./scripts/deploy.js --network localhost
-
+```
 ```bash
 cd ..
 cd frontend
 npm install
 npm run dev
-
+```
 ```bash
 npx hardhat compile
 npx hardhat deploy-zksync --network zkSyncSepolia
-
+```
 
 ```bash
 npx hardhat verify --network zkSyncSepolia YOUR_CONTRACT_ADDRESS
-
-
-```bash
-npx hardhat console --network zkSyncSepolia
-const contract = await ethers.getContractAt("EnergyTrade", "YOUR_CONTRACT_ADDRESS");
-await contract.sellEnergy(10, ethers.utils.parseEther("0.05"));
+```
 
 ## Key Features
 
