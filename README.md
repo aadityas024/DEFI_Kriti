@@ -5,6 +5,57 @@ The energy sector is grappling with three critical challenges: **ensuring energy
 
 To address these issues, we’re introducing a **decentralized Peer-to-Peer (P2P) Energy Trading Platform and Carbon Credit Marketplace**, built on the **zkSync Sepolia Testnet**. This innovative platform allows **energy producers (prosumers) and consumers** to trade energy **directly with each other**, cutting out the middleman. By leveraging **blockchain technology**, the platform ensures that transactions are **transparent, efficient, and secure**. Additionally, it uses **ZK-SNARKs** to **protect user data privacy**, making it a **trustworthy solution for modern energy trading**.
 
+# Installation & Setup
+
+## Clone the Repository
+
+To get started, clone the GitHub repository:
+
+````bash
+git clone https://github.com/Kriti2025.git
+
+````bash
+cd backend
+
+```bash
+node server.js
+
+
+```bash
+npm install
+
+
+```bash
+npx hardhat compile
+
+
+```bash
+npx hardhat node
+
+
+```bash
+npx hardhat run ./scripts/deploy.js --network localhost
+
+```bash
+cd ..
+cd frontend
+npm install
+npm run dev
+
+```bash
+npx hardhat compile
+npx hardhat deploy-zksync --network zkSyncSepolia
+
+
+```bash
+npx hardhat verify --network zkSyncSepolia YOUR_CONTRACT_ADDRESS
+
+
+```bash
+npx hardhat console --network zkSyncSepolia
+const contract = await ethers.getContractAt("EnergyTrade", "YOUR_CONTRACT_ADDRESS");
+await contract.sellEnergy(10, ethers.utils.parseEther("0.05"));
+
 ## Key Features
 
  - **P2P Energy Trading** with dynamic order-matching and geohash-based pricing.  
