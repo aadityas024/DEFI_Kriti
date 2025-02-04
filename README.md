@@ -1,199 +1,101 @@
-# P2P Energy Trading Platform & Carbon Credit Marketplace on zkSync Sepolia Testnet
+# 🌍 P2P Energy Trading & Carbon Credit Marketplace
 
-## Overview
-The **P2P Energy Trading Platform** is a decentralized marketplace that enables direct energy trading between prosumers and consumers using **blockchain technology**. The platform leverages **Solidity smart contracts** and a **Node.js backend** to facilitate **secure, transparent, and automated energy transactions**. It utilizes **geohash-based pricing** and a **dynamic order-matching mechanism** to optimize energy distribution and pricing.
+## 🔥 Overview  
+This project is a **decentralized P2P Energy Trading Platform** and **Carbon Credit Marketplace** powered by **zkSync Sepolia Testnet**. The platform enables direct energy trading between **prosumers** and **consumers**, along with a **trustless carbon credit trading system** using **Solidity smart contracts**.  
 
-Additionally, the **Carbon Credit Marketplace** is a decentralized platform for **buying, selling, and trading carbon credits** as ERC-20 tokens (**CCTokens**). This ensures secure, transparent, and trustless transactions through smart contract automation.
+Key Features:  
+✅ **P2P Energy Trading** with dynamic order-matching and geohash-based pricing.  
+✅ **Carbon Credit Marketplace** for buying, selling, and trading carbon credits as ERC-20 tokens (**CCTokens**).  
+✅ **IoT-Based Battery Monitoring** to validate storage capacity before approving buy orders.  
+✅ **zk-SNARK Validation** ensures privacy and security in transaction verification.  
+✅ **Layer 2 Scaling** on **zkSync** for fast, low-cost, and Ethereum-secured transactions.  
 
-This application is developed as part of the **EnergyChain Challenge** to address key issues such as **energy equity, sustainability, and transparent carbon credit trading**.
+---  
 
-## Features
+## 🚀 Features  
 
-### P2P Energy Trading Platform
-1. **User Profile & Authentication**
-   - Unique user profile with:
-     - Username
-     - User ID
-     - Geolocation (lat, long) → converted to geohash
-     - Unique IoT ID
-   - **JWT-based authentication** for secure access.
+### 🔋 P2P Energy Trading Platform  
+1. **User Profile & Authentication**  
+   - Unique user profile with username, geolocation (converted to **geohash**), and IoT ID.  
+   - **JWT-based authentication** for secure access.  
 
-2. **Sell Order Placement (6-8 AM Window)**
-   - Sellers place sell orders with:
-     - Amount (multiples of **10 kWh**)
-     - Price per unit (**ETH/unit**)
-     - Geohash-based transaction fees
-   - No new sell orders after **8 AM**.
+2. **Sell Order Placement (6-8 AM Window)**  
+   - Sellers place orders in multiples of **10 kWh** at a specified **ETH/unit** price.  
+   - **Geohash-based transaction fees** ensure fair energy pricing.  
+   - No new sell orders allowed after **8 AM**.  
 
-3. **Buy Order Execution (8-10 AM Window)**
-   - Buyers select sell orders manually based on:
-     - Seller’s price
-     - 5% commission
-     - Transfer fee (geohash distance-based)
-   - Partial order fulfillment allowed.
+3. **Buy Order Execution (8-10 AM Window)**  
+   - Buyers manually pick sell orders based on:  
+     - Price per unit  
+     - 5% commission  
+     - Transfer fee (geohash-based distance cost)  
+   - Partial order fulfillment supported.  
 
-4. **Automated Buy Order Matching (Post-10 AM)**
-   - Buy orders are **queued & processed automatically**.
-   - Order matching criteria:
-     - Quantity (multiples of **10 kWh**)
-     - Maximum ETH/unit willing to pay
+4. **Automated Order Matching (Post-10 AM)**  
+   - System automatically **matches buy orders** based on:  
+     - Quantity requested (**multiples of 10 kWh**)  
+     - Maximum ETH/unit the buyer is willing to pay  
 
-5. **Order Management & Cancellation**
-   - **Sell Orders**: Cancelable if not picked for trade.
-   - **Buy Orders**: Cancelable if **at least 5 places away** from queue front.
+5. **Order Management & Cancellation**  
+   - **Sell Orders**: Cancelable if unpicked.  
+   - **Buy Orders**: Cancelable only if **5 places away** in the queue.  
 
-6. **User Dashboard & Trade History**
-   - Users can view:
-     1. Active Sell Orders
-     2. Completed Sell Transactions
-     3. Completed Buy Transactions
-     4. Canceled Sell Orders
-     5. Pending Buy Orders
+6. **User Dashboard**  
+   - Track active & completed trades, pending buy orders, and trade history.  
 
 ---
 
-### Carbon Credit Marketplace (Solidity Smart Contract)
+### 🌱 Carbon Credit Marketplace  
+1. **Selling Carbon Credits (ERC-20 CCTokens)**  
+   - Sellers list **CCTokens** with a fixed price per token in **ETH**.  
+   - Tokens are **escrowed** until the sale is finalized.  
 
-1. **Selling Carbon Credits**
-   - Sellers list **CCTokens** for sale with:
-     - Quantity (number of tokens)
-     - Price per token (**ETH**)
-   - Tokens **escrowed** until sold or canceled.
+2. **Buying Carbon Credits**  
+   - Buyers purchase credits in exchange for ETH.  
+   - Smart contract handles **automated settlement**.  
 
-2. **Buying Carbon Credits**
-   - Buyers purchase tokens by sending ETH.
-   - Upon purchase:
-     - Tokens transferred to buyer.
-     - Seller receives ETH.
+3. **Market Features**  
+   - View active listings, retrieve order details, and cancel unfulfilled orders.  
 
-3. **Market Functions**
-   - View active sell orders.
-   - Retrieve specific order details.
-   - Cancel unfulfilled orders.
-
-4. **Order Matching Mechanism**
-   - Orders matched at **fixed seller-set prices**.
-   - Buyers choose purchase amount.
-
-5. **Security & Transparency**
-   - **Escrow mechanism** prevents fraud.
-   - **On-chain transaction history** ensures auditability.
-   - Sellers can cancel orders before fulfillment.
-
-6. **Commissions**
-   - **1% commission** taken from the bidder (refunded if bid not finalized).
-   - **2% commission** taken from seller upon auction finalization.
+4. **Commissions & Fees**  
+   - **1% commission** from the bidder (refundable if the bid is unsuccessful).  
+   - **2% commission** from the seller upon finalization.  
 
 ---
 
-## Installation & Setup
+## 🔗 IoT-Based Battery Capacity Monitoring  
+This feature ensures that **buyers have enough battery storage** before placing a buy order.  
 
-### **1️⃣ Clone the repository**
-```bash
-git clone https://github.com/your-repo/p2p-energy-trading.git
-cd p2p-energy-trading
-```
+### 📡 How It Works  
+1. **ESP32 IoT Device Monitors Battery**  
+   - Reads battery **voltage** and **remaining capacity** via an analog sensor.  
+   - Runs a local **HTTP server** to serve battery status.  
 
-### **2️⃣ Install dependencies**
-```bash
-npm install
-```
+2. **Backend Requests Battery Status**  
+   - When a buy order is placed, the backend fetches battery data via:  
+     ```
+     http://<BUYER_ESP32_IP>/get-battery
+     ```
 
-### **3️⃣ Configure Hardhat for zkSync Sepolia Testnet**
-Edit `hardhat.config.js`:
-```javascript
-require("@nomicfoundation/hardhat-toolbox");
-require("@matterlabs/hardhat-zksync-deploy");
-require("@matterlabs/hardhat-zksync-solc");
-require("dotenv").config();
-
-module.exports = {
-  solidity: "0.8.19",
-  zksolc: {
-    version: "latest",
-    compilerSource: "binary",
-    settings: {},
-  },
-  networks: {
-    hardhat: {
-      chainId: 31337,
-    },
-    zkSyncSepolia: {
-      url: "https://sepolia.era.zksync.dev",
-      ethNetwork: "sepolia",
-      zksync: true,
-      accounts: [process.env.PRIVATE_KEY],
-    },
-  },
-};
-```
-Create a `.env` file and add your **private key**:
-```
-PRIVATE_KEY=your_wallet_private_key
-```
-
-### **4️⃣ Compile Smart Contracts**
-```bash
-npx hardhat compile
-```
-
-### **5️⃣ Deploy Contracts on zkSync Sepolia**
-```bash
-npx hardhat deploy-zksync --network zkSyncSepolia
-```
-
-### **6️⃣ Verify Contract on zkSync Explorer**
-```bash
-npx hardhat verify --network zkSyncSepolia YOUR_CONTRACT_ADDRESS
-```
-
-### **7️⃣ Run Backend Server**
-```bash
-node server.js
-```
+3. **Order Validation**  
+   - **ZK-SNARKs** validate whether the buyer has enough storage before confirming the order.  
 
 ---
 
-## **Bridging & Testing**
-### **Bridge ETH to zkSync Sepolia**
-- 🔗 [zkSync Sepolia Faucet](https://sepolia-faucet.zksync.dev)
-- 🔗 [zkSync Bridge](https://portal.zksync.io/bridge)
+## 🔐 Zero-Knowledge Proofs (zk-SNARKs) for Order Validation  
+To prevent over-purchasing, we use **zk-SNARK proofs** to verify:  
 
-### **Test Transactions on zkSync**
-Open **Hardhat Console**:
-```bash
-npx hardhat console --network zkSyncSepolia
-```
-Interact with your contract:
-```javascript
-const contract = await ethers.getContractAt("EnergyTrade", "YOUR_CONTRACT_ADDRESS");
-await contract.sellEnergy(10, ethers.utils.parseEther("0.05"));
-```
+- `a` → Buyer’s requested energy (in kWh).  
+- `b` → Total pending buy orders in the system.  
+- `c` → Remaining battery storage capacity.  
 
----
+If **`a + b > c`**, the transaction **fails**. Otherwise, it **proceeds**.  
 
-## **Deploy Frontend**
-Deploy frontend using **Vercel, Netlify, or IPFS**:
-```bash
-npm run build
-npm run deploy
-```
-
----
-
-## **Monitor & Optimize**
-- **Index transactions** with [The Graph](https://thegraph.com/)
-- **Track contracts** on [zkSync Explorer](https://explorer.sepolia.zksync.io/)
-
----
-
-## **🎉 Your dApp is Live on zkSync Sepolia Testnet! 🚀**
-Your **P2P Energy Trading Platform & Carbon Credit Marketplace** is now **faster, cheaper, and Ethereum-secured**.
-
-Do you need help with:
-✅ **Bridging assets**  
-✅ **Testing transactions**  
-✅ **Optimizing gas fees**  
-
-Let me know, and I'll assist you! 🚀🔥
-
+### 🛠 Running zk-SNARK Verification  
+```sh
+nano input.json  
+node circuit_js/generate_witness.js circuit_js/circuit.wasm input.json witness.wtns  
+snarkjs wtns export json witness.wtns witness.json  
+jq '.[1]' witness.json  
+snarkjs groth16 prove circuit_final.zkey witness.wtns proof.json public.json  
+snarkjs groth16 verify verification_key.json public.json proof.json  
