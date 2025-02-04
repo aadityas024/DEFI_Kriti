@@ -7,11 +7,11 @@ To address these issues, we’re introducing a **decentralized Peer-to-Peer (P2P
 
 ## Key Features
 
- **P2P Energy Trading** with dynamic order-matching and geohash-based pricing.  
- **Carbon Credit Marketplace** for buying, selling, and trading carbon credits as ERC-20 tokens (**CCTokens**).  
- **IoT-Based Battery Monitoring** to validate storage capacity before approving buy orders.  
- **zk-SNARK Validation** ensures privacy and security in transaction verification.  
- **Layer 2 Scaling** on **zkSync** for fast, low-cost, and Ethereum-secured transactions.  
+ - **P2P Energy Trading** with dynamic order-matching and geohash-based pricing.  
+ - **Carbon Credit Marketplace** for buying, selling, and trading carbon credits as ERC-20 tokens (**CCTokens**).  
+ - **IoT-Based Battery Monitoring** to validate storage capacity before approving buy orders.  
+ - **zk-SNARK Validation** ensures privacy and security in transaction verification.  
+ - **Layer 2 Scaling** on **zkSync** for fast, low-cost, and Ethereum-secured transactions.  
 
 ---  
 
