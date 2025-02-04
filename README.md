@@ -262,8 +262,8 @@ snarkjs groth16 verify verification_key.json public.json proof.json
 
 ### Local Testing (Using `jq`)
 
- You can quickly check whether `a + b > c` by extracting the witness output.  
- But this does not provide cryptographic proof—it's just an internal value.
+ - You can quickly check whether `a + b > c` by extracting the witness output.  
+ - But this does not provide cryptographic proof—it's just an internal value.
 
 ### Zero-Knowledge Proof (ZKP) Use Case
 
